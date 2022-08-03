@@ -9,23 +9,26 @@
 
     - name: Install nginx
       apt:
-        name: "nginx"
+        name: nginx
         state: present
+
+    - name: create group
+      group:
+        name: blue-green
+        state: present    
 
     - name: Create a directory if it does not exist
       file:
-        path: "{{ website_path_nginx }}"
         state: directory
+        path: /blue-green
+        group: blue-green
+        mode: 02775
+        
 
     - name: Copy new temple file index.html.j2 file
       template:
-        src: "index.html.j2"
-        dest: "{{ website_path_nginx }}/index.html"
-
-    - name: Copy configuration file for nginx
-      copy:
-        src: "sudha.conf"
-        dest: "/etc/nginx/sites-available/sudha.conf"
+        src: index.html.j2
+        dest: /var/www/html/index.html
 
     - name: reStart nginx
       service:
