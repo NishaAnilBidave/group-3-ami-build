@@ -27,7 +27,7 @@
         src: "sudha.conf"
         dest: "/etc/nginx/sites-available/sudha.conf"
 
-    - name: Start NGiNX
+    - name: reStart nginx
       service:
         name: nginx
-        state: started
+        state: restarted
