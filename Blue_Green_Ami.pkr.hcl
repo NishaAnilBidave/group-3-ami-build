@@ -7,7 +7,7 @@ packer {
   }
 }
 
-variable "ami_prefix1" {
+variable "blue_ami_name" {
   type    = string
   default = "Blue_Ami"
 }
@@ -16,14 +16,14 @@ locals {
   timestamp = regex_replace(timestamp(), "[- TZ:]", "")
 }
 
-source "amazon-ebs" "ubuntu" {
-  ami_name      = "${var.ami_prefix1}-${local.timestamp}"
+source "amazon-ebs" "Blue-web-server" {
+  ami_name      = "${var.blue_ami_name}-${local.timestamp}"
   instance_type = "t2.micro"
   region        = "ap-south-1"
   vpc_id        = "vpc-0e4a12ff878f00312"
   subnet_id     = "subnet-0973eb0379fbbe882"
-  security_group_id = "sg-0993a9913a37d35be"
-  // ssh_interface = "private_ip"
+  // security_group_id = "sg-0993a9913a37d35be"
+
 
   source_ami_filter {
     filters = {
@@ -37,19 +37,19 @@ source "amazon-ebs" "ubuntu" {
   ssh_username = "ubuntu"
 }
 
-variable "ami_prefix2" {
+variable "green_ami_name" {
   type    = string
   default = "Green_Ami"
 }
 
-source "amazon-ebs" "ubuntu-focal" {
-  ami_name      = "${var.ami_prefix2}-${local.timestamp}"
+source "amazon-ebs" "Green-web-server" {
+  ami_name      = "${var.green_ami_name}-${local.timestamp}"
   instance_type = "t2.micro"
   region        = "ap-south-1"
   vpc_id        = "vpc-0e4a12ff878f00312"
   subnet_id     = "subnet-045108be0ce6eb6aa"
-  security_group_id = "sg-0993a9913a37d35be"  
-  // ssh_interface = "private_ip"
+  // security_group_id = "sg-0993a9913a37d35be"  
+
 
   source_ami_filter {
     filters = {
@@ -64,26 +64,26 @@ source "amazon-ebs" "ubuntu-focal" {
 }
 
 build {
-  name = "learn-packer"
+  name = "blue-build"
   sources = [
-    "source.amazon-ebs.ubuntu"
+    "source.amazon-ebs.Blue-web-server"
   ]
 
   provisioner "ansible" {
     playbook_file = "./main.yml"
-    extra_arguments = ["--extra-vars", "@/c_blue.yml"]
+    extra_arguments = ["--extra-vars", "@./files/c_blue.yml"]
   }
 }
 
 build {
-  name = "learn-packer"
+  name = "green-build"
   sources = [
-    "source.amazon-ebs.ubuntu-focal"
+    "source.amazon-ebs.Green-web-server"
   ]
 
   provisioner "ansible" {
     playbook_file = "./main.yml"
-    extra_arguments = ["--extra-vars", "@/c_green.yml"]
-  }
+    extra_arguments = ["--extra-vars", "@./files/c_green.yml"]
 
+}
 }
