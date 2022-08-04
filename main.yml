@@ -1,6 +1,6 @@
 ---
 - name: Install nginx
-  hosts: default
+  hosts: localhost
   become: true
   tasks:
     - name: Update the apt-get
@@ -34,3 +34,5 @@
       service:
         name: nginx
         state: restarted
+
+    
