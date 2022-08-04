@@ -12,8 +12,13 @@ source "amazon-ebs" "ubuntu" {
   instance_type = "t2.micro"
   region        = "ap-south-1"
   vpc_id        = "vpc-0e4a12ff878f00312"
-  subnet_id     = "subnet-05d791b1769a9524e"
-  security_group_id = "sg-0ea2fb29a447f87ef"
+  subnet_id     = "subnet-0973eb0379fbbe882"
+  // instance_name   = "i-0c007c06e4e000c05"
+  security_group_id = "sg-0993a9913a37d35be"
+  // ssh_interface = "private_ip"
+  // ssh_keypair_name = "Blue_ami"
+  // ssh_private_key_file = "Blue_ami.pem"
+  // ssh_clear_authorized_keys = true
   source_ami_filter {
     filters = {
       name                = "ubuntu/images/*ubuntu-jammy-22.04-amd64-server-*"
@@ -31,8 +36,13 @@ source "amazon-ebs" "ubuntu-focal" {
   instance_type = "t2.micro"
   region        = "ap-south-1"
   vpc_id        = "vpc-0e4a12ff878f00312"
-  subnet_id     = "subnet-0030a1444840c6397"
-  security_group_id = "sg-0ea2fb29a447f87ef"
+  subnet_id     = "subnet-045108be0ce6eb6aa"
+  // instance_id   = "i-0b5f5c3b83caa36d6"
+  security_group_id = "sg-0993a9913a37d35be"  
+  // ssh_interface = "private_ip"
+  // ssh_keypair_name = "Green_ami"
+  // ssh_private_key_file = "Green_ami.pem"
+  // ssh_clear_authorized_keys = true
   source_ami_filter {
     filters = {
       name                = "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*"
@@ -52,8 +62,8 @@ build {
     "source.amazon-ebs.ubuntu-focal"
   ]
 
-  // provisioner "ansible" {
-  //   playbook_file = "/playbooks/main.yml"
-  // }
+  provisioner "ansible" {
+    playbook_file = "./main.yml"
+  }
 
 }
