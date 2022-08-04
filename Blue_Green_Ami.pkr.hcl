@@ -52,12 +52,24 @@ source "amazon-ebs" "ubuntu-focal" {
 build {
   name = "learn-packer"
   sources = [
-    "source.amazon-ebs.ubuntu",
+    "source.amazon-ebs.ubuntu"
+  ]
+
+  provisioner "ansible" {
+    playbook_file = "./main.yml"
+    extra_arguments = ["--extra-vars", "@/Users/jinendra.dhurvey/src/Talent-Academy/Group_3/group-3-ami-build/group_vars/c_blue.yml"]
+  }
+}
+
+build {
+  name = "learn-packer"
+  sources = [
     "source.amazon-ebs.ubuntu-focal"
   ]
 
   provisioner "ansible" {
     playbook_file = "./main.yml"
+    extra_arguments = ["--extra-vars", "@/Users/jinendra.dhurvey/src/Talent-Academy/Group_3/group-3-ami-build/group_vars/c_green.yml"]
   }
 
 }
