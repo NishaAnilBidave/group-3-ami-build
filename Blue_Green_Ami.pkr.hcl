@@ -56,8 +56,8 @@ build {
     "source.amazon-ebs.ubuntu-focal"
   ]
 
-  // provisioner "ansible" {
-  //   playbook_file = "./main.yml"
-  // }
+  provisioner "ansible" {
+    playbook_file = "./main.yml"
+  }
 
 }
