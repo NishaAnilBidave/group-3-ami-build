@@ -1,6 +1,6 @@
 ---
 - name: Install nginx
-  hosts: web
+  hosts: default
   become: true
   tasks:
     - name: Update the apt-get
