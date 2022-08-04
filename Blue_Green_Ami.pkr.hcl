@@ -7,8 +7,17 @@ packer {
   }
 }
 
+variable "ami_prefix1" {
+  type    = string
+  default = "Blue_Ami"
+}
+
+locals {
+  timestamp = regex_replace(timestamp(), "[- TZ:]", "")
+}
+
 source "amazon-ebs" "ubuntu" {
-  ami_name      = "Blue_Ami"
+  ami_name      = "${var.ami_prefix1}-${local.timestamp}"
   instance_type = "t2.micro"
   region        = "ap-south-1"
   vpc_id        = "vpc-0e4a12ff878f00312"
@@ -28,8 +37,13 @@ source "amazon-ebs" "ubuntu" {
   ssh_username = "ubuntu"
 }
 
+variable "ami_prefix2" {
+  type    = string
+  default = "Green_Ami"
+}
+
 source "amazon-ebs" "ubuntu-focal" {
-  ami_name      = "Green_Ami"
+  ami_name      = "${var.ami_prefix2}-${local.timestamp}"
   instance_type = "t2.micro"
   region        = "ap-south-1"
   vpc_id        = "vpc-0e4a12ff878f00312"
@@ -57,7 +71,7 @@ build {
 
   provisioner "ansible" {
     playbook_file = "./main.yml"
-    extra_arguments = ["--extra-vars", "@/Users/jinendra.dhurvey/src/Talent-Academy/Group_3/group-3-ami-build/group_vars/c_blue.yml"]
+    extra_arguments = ["--extra-vars", "@/c_blue.yml"]
   }
 }
 
@@ -69,7 +83,7 @@ build {
 
   provisioner "ansible" {
     playbook_file = "./main.yml"
-    extra_arguments = ["--extra-vars", "@/Users/jinendra.dhurvey/src/Talent-Academy/Group_3/group-3-ami-build/group_vars/c_green.yml"]
+    extra_arguments = ["--extra-vars", "@/c_green.yml"]
   }
 
 }
