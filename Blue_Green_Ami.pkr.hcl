@@ -97,7 +97,7 @@ build {
 
   provisioner "ansible" {
     playbook_file = "./main.yml"
-    extra_arguments = ["--extra-vars", "@./files/c_blue.yml"]
+    extra_arguments = ["--extra-vars", "@./c_blue.yml"]
     
   }
 }
@@ -110,7 +110,7 @@ build {
 
   provisioner "ansible" {
     playbook_file = "./main.yml"
-    extra_arguments = ["--extra-vars", "@./files/c_green.yml"]
+    extra_arguments = ["--extra-vars", "@./c_green.yml"]
 
 }
 }
