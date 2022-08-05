@@ -68,6 +68,10 @@ build {
   provisioner "ansible" {
     playbook_file = "./main.yml"
     extra_arguments = ["--extra-vars", "@./files/c_blue.yml"]
+    extra_arguments = [
+        "--extra-vars",
+        "ansible_python_interpreter=/usr/bin/python"
+      ]
   }
 }
 
@@ -80,6 +84,9 @@ build {
   provisioner "ansible" {
     playbook_file = "./main.yml"
     extra_arguments = ["--extra-vars", "@./files/c_green.yml"]
-
+    extra_arguments = [
+        "--extra-vars",
+        "ansible_python_interpreter=/usr/bin/python"
+      ]
 }
 }

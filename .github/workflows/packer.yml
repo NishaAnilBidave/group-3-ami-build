@@ -34,6 +34,5 @@ jobs:
         with:
           command: build
           target: Blue_Green_Ami.pkr.hcl
-          working_directory: ./main.yml
         env:
           PACKER_LOG: 1
