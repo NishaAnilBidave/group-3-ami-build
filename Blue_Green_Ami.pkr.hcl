@@ -65,11 +65,11 @@ build {
     "source.amazon-ebs.Blue-web-server"
   ]
 
-  provisioner "ansible" {
-    playbook_file = "./main.yml"
-    extra_arguments = ["--extra-vars", "@./files/c_blue.yml"]
+  // provisioner "ansible" {
+  //   playbook_file = "./main.yml"
+  //   extra_arguments = ["--extra-vars", "@./files/c_blue.yml"]
     
-  }
+  // }
 }
 
 build {
@@ -78,9 +78,9 @@ build {
     "source.amazon-ebs.Green-web-server"
   ]
 
-  provisioner "ansible" {
-    playbook_file = "./main.yml"
-    extra_arguments = ["--extra-vars", "@./files/c_green.yml"]
+  // provisioner "ansible" {
+  //   playbook_file = "./main.yml"
+  //   extra_arguments = ["--extra-vars", "@./files/c_green.yml"]
 
-  }
+  // }
 }

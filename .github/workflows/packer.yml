@@ -32,12 +32,12 @@ jobs:
           command: init
           target: Blue_Green_Ami.pkr.hcl
 
-      # # validate templates
-      # - name: Validate Template
-      #   uses: hashicorp/packer-github-actions@master
-      #   with:
-      #     command: validate
-      #     target: Blue_Green_Ami.pkr.hcl
+      # validate templates
+      - name: Validate Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          target: Blue_Green_Ami.pkr.hcl
 
       # build artifact
       - name: Build Artifact
