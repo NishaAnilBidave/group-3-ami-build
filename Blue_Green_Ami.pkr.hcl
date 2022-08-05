@@ -20,8 +20,23 @@ source "amazon-ebs" "Blue-web-server" {
   ami_name      = "${var.blue_ami_name}-${local.timestamp}"
   instance_type = "t2.micro"
   region        = "ap-south-1"
-  vpc_id        = "vpc-0e4a12ff878f00312"
-  subnet_id     = "subnet-0973eb0379fbbe882"
+  
+  vpc_filter {
+    filters = {
+      "tag:Name" : "vpc_group3"
+      isDefault = "false"
+      cidr      = "172.168.0.0/16"
+    }
+  }
+  subnet_filter {
+    filters = {
+      "tag:Name" : "public_a"
+    }
+    most_free = true
+    random = false
+  }
+
+  associate_public_ip_address = true
   
   source_ami_filter {
     filters = {
@@ -44,8 +59,23 @@ source "amazon-ebs" "Green-web-server" {
   ami_name      = "${var.green_ami_name}-${local.timestamp}"
   instance_type = "t2.micro"
   region        = "ap-south-1"
-  vpc_id        = "vpc-0e4a12ff878f00312"
-  subnet_id     = "subnet-045108be0ce6eb6aa"
+
+  vpc_filter {
+    filters = {
+      "tag:Name" : "vpc_group3"
+      isDefault = "false"
+      cidr      = "172.168.0.0/16"
+    }
+  }
+  subnet_filter {
+    filters = {
+      "tag:Name" : "public_b"
+    }
+    most_free = true
+    random = false
+  }
+
+  associate_public_ip_address = true
 
   source_ami_filter {
     filters = {
@@ -68,6 +98,7 @@ build {
   provisioner "ansible" {
     playbook_file = "./main.yml"
     extra_arguments = ["--extra-vars", "@./files/c_blue.yml"]
+    
   }
 }
 
