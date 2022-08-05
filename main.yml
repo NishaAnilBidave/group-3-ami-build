@@ -1,0 +1,38 @@
+---
+- name: Install nginx
+  hosts: default
+  become: true
+  tasks:
+    - name: Update the apt-get
+      apt:
+        update_cache: yes
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: create group
+      group:
+        name: blue-green
+        state: present    
+
+    - name: Create a directory if it does not exist
+      file:
+        state: directory
+        path: /blue-green
+        group: blue-green
+        mode: 02775
+        
+
+    - name: Copy new temple file index.html.j2 file
+      template:
+        src: index.html.j2
+        dest: /var/www/html/index.html
+
+    - name: reStart nginx
+      service:
+        name: nginx
+        state: restarted
+
+    
