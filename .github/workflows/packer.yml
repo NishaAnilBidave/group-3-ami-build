@@ -13,6 +13,13 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        
+      - name: AWS Authetication
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::778630672463:role/github-actions-oidc
+          aws-region: ap-south-1
+          role-session-name: githubVPCDeploy
 
       # packer init
       - name: Init Template
