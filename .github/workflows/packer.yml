@@ -9,11 +9,15 @@ jobs:
   packer:
     runs-on: ubuntu-latest
     name: packer
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-        
+
       - name: AWS Authetication
         uses: aws-actions/configure-aws-credentials@v1
         with:
