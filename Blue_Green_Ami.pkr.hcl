@@ -22,7 +22,7 @@ source "amazon-ebs" "Blue-web-server" {
   region        = "ap-south-1"
   vpc_id        = "vpc-0e4a12ff878f00312"
   subnet_id     = "subnet-0973eb0379fbbe882"
-  // security_group_id = "sg-0993a9913a37d35be"
+  security_group_id = "sg-0ea2fb29a447f87ef"
 
 
   source_ami_filter {
@@ -48,7 +48,7 @@ source "amazon-ebs" "Green-web-server" {
   region        = "ap-south-1"
   vpc_id        = "vpc-0e4a12ff878f00312"
   subnet_id     = "subnet-045108be0ce6eb6aa"
-  // security_group_id = "sg-0993a9913a37d35be"  
+  security_group_id = "sg-0ea2fb29a447f87ef"  
 
 
   source_ami_filter {
