@@ -19,7 +19,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::778630672463:role/github-actions-oidc
           aws-region: ap-south-1
-          role-session-name: amigithubactionsDeploy
+          role-session-name: githubVPCDeploy
 
       - name: Install python
         uses: actions/setup-python@v3
