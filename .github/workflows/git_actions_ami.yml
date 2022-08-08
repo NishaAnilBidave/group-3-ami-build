@@ -1,0 +1,42 @@
+---
+
+name: Packer Build
+
+on:
+  push:
+    branch: githubactions_ami
+jobs:
+  packer:
+    runs-on: ubuntu-latest
+    name: packer
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::778630672463:role/github-actions-oidc
+          aws-region: ap-south-1
+          role-session-name: amigithubactionsDeploy
+
+      - name: Install python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.8'
+
+      - name: Install ansible
+        run: pip install ansible
+      
+      - name: Install Packer
+        run: |
+          sudo apt-get update; sudo apt-get install -y curl gnupg software-properties-common ;
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - ;
+          sudo apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" ;
+          sudo apt-get update && sudo apt-get install -y packer;
+
+      - name: Build artifacts
+        run : |
+          cd deploy/packer;
+          packer build Blue_Green_Ami.pkr.hcl
