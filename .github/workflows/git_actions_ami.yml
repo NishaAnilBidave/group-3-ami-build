@@ -40,6 +40,12 @@ jobs:
           sudo apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" ;
           sudo apt-get update && sudo apt-get install -y packer;
 
+      - name: Init Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: init
+          target: Blue_Green_Ami.pkr.hcl
+
       - name: Build Artifact
         uses: hashicorp/packer-github-actions@master
         with:
