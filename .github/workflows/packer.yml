@@ -31,10 +31,7 @@ jobs:
         with:
           command: validate
           target: Blue_Green_Ami.pkr.hcl
-      # - name: Install ansible
-      #   run: pip install ansible
-      # - name: Append binary PATH
-      #   run: echo "$(dirname $(which ansible))" >> $GITHUB_PATH
+      
       # build artifact
       - name: Build Artifact
         uses: hashicorp/packer-github-actions@master
