@@ -94,7 +94,7 @@ build {
   sources = [
     "source.amazon-ebs.Blue-web-server"
   ]
-
+  
   provisioner "ansible" {
     playbook_file = "./main.yml"
     extra_arguments = ["--extra-vars", "@./c_blue.yml"]
