@@ -1,0 +1,45 @@
+name: Packer
+on:
+  push:
+    branch: githubactions_ami
+jobs:
+  packer:
+    runs-on: ubuntu-latest
+    name: packer
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: AWS Authetication
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::778630672463:role/github-actions-oidc
+          aws-region: ap-south-1
+          role-session-name: githubVPCDeploy
+      # packer init
+      - name: Init Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: init
+          target: Blue_Green_Ami.pkr.hcl
+      # validate templates
+      - name: Validate Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          target: Blue_Green_Ami.pkr.hcl
+      # - name: Install ansible
+      #   run: pip install ansible
+      # - name: Append binary PATH
+      #   run: echo "$(dirname $(which ansible))" >> $GITHUB_PATH
+      # build artifact
+      - name: Build Artifact
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build
+          target: Blue_Green_Ami.pkr.hcl
+        env:
+          PACKER_LOG: 1
