@@ -40,7 +40,10 @@ jobs:
           sudo apt-add-repository -y "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" ;
           sudo apt-get update && sudo apt-get install -y packer;
 
-      - name: Build artifacts
-        run : |
-          cd deploy/packer;
-          packer build Blue_Green_Ami.pkr.hcl
+      - name: Build Artifact
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build
+          target: Blue_Green_Ami.pkr.hcl
+        env:
+          PACKER_LOG: 1
