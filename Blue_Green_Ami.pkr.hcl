@@ -94,10 +94,6 @@ build {
   sources = [
     "source.amazon-ebs.Blue-web-server"
   ]
-  provisioner "ansible" {
-    playbook_file = "./ansible.yml"
-    
-  }
   
   provisioner "ansible" {
     playbook_file = "./main.yml"
@@ -111,10 +107,6 @@ build {
   sources = [
     "source.amazon-ebs.Green-web-server"
   ]
-  provisioner "ansible" {
-    playbook_file = "./ansible.yml"
-    
-  }
 
   provisioner "ansible" {
     playbook_file = "./main.yml"
