@@ -1,0 +1,6 @@
+---
+- name: be sure ansible is installed
+  yum:
+    name: ansible
+    state: present
+    version: latest
